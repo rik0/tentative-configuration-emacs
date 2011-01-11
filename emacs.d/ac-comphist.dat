@@ -1,0 +1,66 @@
+((("my-tron-cycle" .
+   [0 0 0 0 0 0 2 0 0 0 0 0 0])
+  ("tron-cycle-update-position" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("tron-cycle-position" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0])
+  ("assert-equal" .
+   [1 0 0 0 0 0 0 0 0 0 0 0])
+  ("tron-cycle-creation" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("use-package" .
+   [1 0 0 0 0 0 0 0 0 0 0])
+  ("load" .
+   [2 0 0 0])
+  ("cycle" .
+   [1 0 0 0 0])
+  ("mouse-rect-2d" .
+   [0 0 0 0 0 0 0 0 1 0 0 0 0])
+  ("paredit-mode" .
+   [0 0 0 0 0 1 0 0 0 0 0 0])
+  ("list" .
+   [1 0 0 0])
+  ("equal" .
+   [1 0 0 0 0])
+  (":test" .
+   [1 0 0 0 0])
+  ("*slime-stuff*" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 1])
+  ("member" .
+   [1 0 0 0 0 0])
+  ("if" .
+   [1 0])
+  ("cond" .
+   [1 0 0 0])
+  ("buffer-name" .
+   [1 0 0 0 0 0 0 0 0 0 0])
+  ("let" .
+   [1 0 0])
+  ("defvar" .
+   [0 0 0 0 1 0])
+  ("length" .
+   [1 0 0 0 0 0])
+  ("require" .
+   [2 0 0 0 0 0 0])
+  ("shell-command" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 1])
+  ("princ" .
+   [1 0 0 0 0])
+  ("shell-command-to-string" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0])
+  ("mac-read-environment-vars-from-shell" .
+   [0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("mac-read-environment-vars-from-shell-2" .
+   [0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("defparameter" .
+   [1 0 0 0 0 1 0 0 0 0 0 0])
+  ("100" .
+   [1 0 0])
+  ("t" .
+   [1])
+  ("new-position" .
+   [0 0 0 0 0 0 1 0 0 0 0 0])
+  ("in-package" .
+   [2 0 0 0 0 0 0 0 0 0])
+  (":cl-tron" .
+   [2 0 0 1 0 0 0 0])))

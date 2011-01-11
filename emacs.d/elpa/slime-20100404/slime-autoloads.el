@@ -1,84 +1,44 @@
-;;; slime-autoloads.el --- automatically extracted autoloads
-;;
+;;; slime-autoloads.el --- autoload definitions for SLIME
+
+;; Copyright (C) 2007  Helmut Eller
+
+;; This file is protected by the GNU GPLv2 (or later), as distributed
+;; with GNU Emacs.
+
+;;; Commentary:
+
+;; This code defines the necessary autoloads, so that we don't need to
+;; load everything from .emacs.
+
 ;;; Code:
 
-
-;;;### (autoloads (slime-hyperspec-lookup slime-connect slime slime-mode
-;;;;;;  slime-lisp-mode-hook) "slime" "slime.el" (19559 51266))
-;;; Generated autoloads from slime.el
+(autoload 'slime "slime"
+  "Start a Lisp subprocess and connect to its Swank server." t) 
+
+(autoload 'slime-mode "slime"
+  "SLIME: The Superior Lisp Interaction (Minor) Mode for Emacs." t)
+
+(autoload 'slime-connect "slime"
+  "Connect to a running Swank server." t)
+
+(autoload 'hyperspec-lookup "hyperspec" nil t)
+
+(autoload 'slime-lisp-mode-hook "slime")
+(autoload 'slime-scheme-mode-hook "slime")
 
 (defvar slime-lisp-modes '(lisp-mode))
+(defvar slime-setup-contribs nil
+  "List of contribst to load.
+Modified my slime-setup.")
 
-(defvar slime-setup-contribs nil)
+(defun slime-setup (&optional contribs)
+  "Setup Emacs so that lisp-mode buffers always use SLIME.
+CONTRIBS is a list of contrib packages to load."
+  (when (member 'lisp-mode slime-lisp-modes)
+    (add-hook 'lisp-mode-hook 'slime-lisp-mode-hook))
+  (setq slime-setup-contribs contribs)
+  (add-hook 'slime-load-hook 'slime-setup-contribs))
 
-(defun slime-setup (&optional contribs) "\
-Setup Emacs so that lisp-mode buffers always use SLIME.
-CONTRIBS is a list of contrib packages to load." (when (member (quote lisp-mode) slime-lisp-modes) (add-hook (quote lisp-mode-hook) (quote slime-lisp-mode-hook))) (setq slime-setup-contribs contribs) (slime-setup-contribs))
-
-(autoload 'slime-lisp-mode-hook "slime" "\
-Not documented
-
-\(fn)" nil nil)
-
-(autoload 'slime-mode "slime" "\
-\\<slime-mode-map>SLIME: The Superior Lisp Interaction Mode for Emacs (minor-mode).
-
-Commands to compile the current buffer's source file and visually
-highlight any resulting compiler notes and warnings:
-\\[slime-compile-and-load-file]	- Compile and load the current buffer's file.
-\\[slime-compile-file]	- Compile (but not load) the current buffer's file.
-\\[slime-compile-defun]	- Compile the top-level form at point.
-
-Commands for visiting compiler notes:
-\\[slime-next-note]	- Goto the next form with a compiler note.
-\\[slime-previous-note]	- Goto the previous form with a compiler note.
-\\[slime-remove-notes]	- Remove compiler-note annotations in buffer.
-
-Finding definitions:
-\\[slime-edit-definition]	- Edit the definition of the function called at point.
-\\[slime-pop-find-definition-stack]	- Pop the definition stack to go back from a definition.
-
-Documentation commands:
-\\[slime-describe-symbol]	- Describe symbol.
-\\[slime-apropos]	- Apropos search.
-\\[slime-disassemble-symbol]	- Disassemble a function.
-
-Evaluation commands:
-\\[slime-eval-defun]	- Evaluate top-level from containing point.
-\\[slime-eval-last-expression]	- Evaluate sexp before point.
-\\[slime-pprint-eval-last-expression]	- Evaluate sexp before point, pretty-print result.
-
-Full set of commands:
-\\{slime-mode-map}
-
-\(fn &optional ARG)" t nil)
-
-(autoload 'slime "slime" "\
-Start an inferior^_superior Lisp and connect to its Swank server.
-
-\(fn &optional COMMAND CODING-SYSTEM)" t nil)
-
-(autoload 'slime-connect "slime" "\
-Connect to a running Swank server. Return the connection.
-
-\(fn HOST PORT &optional CODING-SYSTEM)" t nil)
-
-(autoload 'slime-hyperspec-lookup "slime" "\
-A wrapper for `hyperspec-lookup'
-
-\(fn SYMBOL-NAME)" t nil)
-
-;;;***
-
-;;;### (autoloads nil nil ("slime-pkg.el") (19559 51266 144925))
-
-;;;***
-
 (provide 'slime-autoloads)
-;; Local Variables:
-;; version-control: never
-;; no-byte-compile: t
-;; no-update-autoloads: t
-;; coding: utf-8
-;; End:
+
 ;;; slime-autoloads.el ends here

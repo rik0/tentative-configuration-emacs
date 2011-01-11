@@ -16,21 +16,32 @@
 (require 'nav)
 (nav)
 
+;;Supporto per scheme
+(require 'quack)
+
+      
 ;; Kill default buffer without the extra emacs questions 
 (defun kill-buffer-no-questions ()   
    (interactive) 
    (kill-buffer (buffer-name)))
 
 
+
 ;;SYSTEM DEPENDENT CONFIGURATIONS
 (defvar macosx-p (string-match "darwin" (symbol-name system-type)))
 (defvar linux-p (string-match "gnu/linux" (symbol-name system-type)))
 
+(defun macosx-lisp-mode-hook ()
+  (local-set-key (kbd "C-c C-r") 'slime-eval-region))
+
 ;;TIPS: C-h k visualizza il comando triggerato da uno shortcut o menu.
-;;MAC-OS SPECIFIC SETTINGS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;MAC-OS SPECIFIC SETTINGS ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'fixpath) ;;setta variabili d'ambiente su MAC-OS
 (if macosx-p
   (progn
-    (tool-bar-mode 1)
+    (if window-system (tool-bar-mode 1)) ;Se ho la GUI abilito la toolbar
     (setq inhibit-splash-screen t) ;Toglie lo splashscreen
     (setq visible-bell t) ;Mai piu BEEP
     (setq mac-option-modifier nil)
@@ -48,7 +59,10 @@
     (global-set-key (kbd "M-s") 'save-buffer) ;SAVE                                      
     (global-set-key (kbd "<f1>") 'execute-extended-command) ;;M-x
     (global-set-key (kbd "M-a") 'mark-whole-buffer)                                                             
-    (global-set-key (kbd "<f2>") 'ns-toggle-fullscreen)))
+    (global-set-key (kbd "<f2>") 'ns-toggle-fullscreen)
+    (add-hook 'lisp-mode-hook 'macosx-lisp-mode-hook)
+    (setq shell-file-name "/bin/zsh")
+    (add-hook 'emacs-startup-hook 'mac-read-environment-vars-from-shell)))
 
 ;LINUX SPECIFIC SETTINGS
 (if linux-p
@@ -67,9 +81,7 @@
     (global-set-key (kbd "C-s") 'save-buffer) ;SAVE                                      
     (global-set-key (kbd "<f1>") 'execute-extended-command) ;;M-x
     (global-set-key (kbd "C-a") 'mark-whole-buffer) ;SELECT ALL                                                          
-    (global-set-key (kbd "<f2>") 'my-toggle-fullscreen) ;FULLSCREEN                                                           
-  )
-) 
+    (global-set-key (kbd "<f2>") 'my-toggle-fullscreen))) 
 	
 ;;Toggle fullscreen LINUX
 (defvar my-fullscreen-p t "Check if fullscreen is on or off")
@@ -105,7 +117,46 @@
 ;;Mi permette di avere le tab per ogni file aperto.
 (require 'tabbar)
 (tabbar-mode)
-(setq tabbar-buffer-groups-function (lambda () (list "All")))
+
+(global-set-key (kbd "C-<right>") 'tabbar-forward-tab)
+(global-set-key (kbd "C-<left>") 'tabbar-backward-tab)
+
+;; add a buffer modification state indicator in the tab label,
+;; and place a space around the label to make it looks less crowd
+(defadvice tabbar-buffer-tab-label (after fixup_tab_label_space_and_flag activate)
+   (setq ad-return-value
+		(if (and (buffer-modified-p (tabbar-tab-value tab))
+				 (buffer-file-name (tabbar-tab-value tab)))
+			(concat " + " (concat ad-return-value " "))
+			(concat " " (concat ad-return-value " ")))))
+			
+;; called each time the modification state of the buffer changed
+(defun ztl-modification-state-change ()
+   (tabbar-set-template tabbar-current-tabset nil)
+   (tabbar-display-update))
+   
+;; first-change-hook is called BEFORE the change is made
+(defun ztl-on-buffer-modification ()
+   (set-buffer-modified-p t)
+   (ztl-modification-state-change))
+(add-hook 'after-save-hook 'ztl-modification-state-change)
+;; this doesn't work for revert, I don't know
+;;(add-hook 'after-revert-hook 'ztl-modification-state-change)
+(add-hook 'first-change-hook 'ztl-on-buffer-modification)
+
+;;Separo per gruppi le varie tab
+(defvar *emacs-notifications* '("*Messages*" "*Completions*"))
+(defvar *navigations* '("*nav*"))
+(defvar *slime-stuff* '("*inferior-lisp*" "*slime-events*" "*slime-repl sbcl*" "*sldb sbcl/1*"))
+
+(setq tabbar-buffer-groups-function
+  (lambda ()
+    (cond ((member (buffer-name) *slime-stuff*) (list "#slime"))
+          ((member (buffer-name) *emacs-notifications*) (list "#emacs-notifications"))
+          ((member (buffer-name) *navigations*) (list (buffer-name)))
+          (t (list "All")))))
+
+;(setq tabbar-buffer-groups-function (lambda () (list "All")))
 
 ;;Disabilita il backup automatico dei file
 (setq backup-inhibited t)
@@ -117,20 +168,21 @@
 (slime-setup)
 
 ;;Fa splittare la finestra quando parte slime
-(add-hook 'slime-repl-mode-hook 'split-window-horizontally)
+(add-hook 'slime-repl-mode-hook 'split-window-vertically)
 
 ;;Rainbow-mode per parentesi
 (setq hl-paren-colors
-      '(;"#8f8f8f" ; this comes from Zenburn
-                   ; and I guess I'll try to make the far-outer parens look like this
-        "orange1" "yellow1" "greenyellow" "green1"
-        "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
+      '("red"
+        "orange" "yellow" "greenyellow" "green"
+        "springgreen" "cyan" "slateblue" "magenta" "purple"))
 
-(add-hook 'lisp-mode-hook (lambda () (highlight-parentheses-mode t) (wide-column-mode t)))
+(add-hook 'lisp-mode-hook 
+	  (lambda () 
+	    (highlight-parentheses-mode t)))
 
 ;; Mi avverte se supero gli 80 caratteri
 (require 'highlight-80+)
-(add-hook 'emacs-startup-hook (lambda () (highlight-80+-mode))) ;;Non so se e' necessario ma prima non funzionava senza hook
+(add-hook 'lisp-mode-hook (lambda () (highlight-80+-mode t)))
 
 ;; Serve per indentare bene con C e simili
 (add-hook 'c-mode-common-hook '(lambda ()
@@ -184,3 +236,16 @@
 (add-to-list 'ac-modes 'lisp-mode)
 (ac-config-default)
 
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(quack-programs (quote ("mzscheme" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )

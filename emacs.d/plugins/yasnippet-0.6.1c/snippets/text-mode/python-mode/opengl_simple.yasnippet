@@ -1,0 +1,114 @@
+# -*- mode: snippet -*-
+# name: opengl_simple
+# key: open_gl_simple
+# binding: "keybinding"
+# expand-env: ((some-var some-value))
+# --
+
+# coding: utf-8 -*-
+#! /usr/bin/env python
+"""Il tuo commento qui."""
+
+from OpenGL.GL import *
+from OpenGL.GLUT import *
+from simpleOpenGL import *
+
+x_rot = 0.0
+y_rot = 0.0
+clipping_width = 100
+clipping_height = 100
+
+def RenderScene():
+
+    global x_rot, y_rot
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glPushMatrix()
+    
+    glRotatef(x_rot, 1.0,0.0,0.0)
+    glRotatef(y_rot, 0.0, 1.0, 0.0)
+    
+    glColor3f(*SIMGL_BLACK)
+    glutWireCube(50.0)
+    glColor3f(*SIMGL_PUMPKIN_ORANGE)
+    glutSolidCube(50.0)
+    
+    glPopMatrix()
+    glutSwapBuffers()
+    
+    
+def ChangeSize(w,h):
+    
+    global clipping_width, clipping_height
+    n_range = 100.0
+    
+    if h == 0:
+        h = 1
+    
+    glViewport(0,0,w,h)
+    aspect_ratio = float(w)/float(h)
+    
+    if w <= h:
+        u,v = 1,1/aspect_ratio
+        clipping_height = clipping_height/aspect_ratio
+    else:
+        u,v = aspect_ratio, 1
+        clipping_width = clipping_width * aspect_ratio
+    
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    
+    # Establish clipping volume (left, right, bottom, top, near, far)
+    glOrtho(-n_range*u, n_range*u, -n_range*v, n_range*v, n_range,-n_range)
+    
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
+    
+
+def SpecialKeys(key, x, y):
+
+    global x_rot, y_rot
+    
+    if(key == GLUT_KEY_UP):
+        x_rot-= 5.0
+
+    if(key == GLUT_KEY_DOWN):
+        x_rot += 5.0
+
+    if(key == GLUT_KEY_LEFT):
+        y_rot -= 5.0
+
+    if(key == GLUT_KEY_RIGHT):
+        y_rot += 5.0
+
+    if(key > 356.0):
+        x_rot = 0.0
+
+    if(key < -1.0):
+        xRot = 355.0
+
+    if(key > 356.0):
+        yRot = 0.0
+
+    if(key < -1.0):
+        yRot = 355.0
+
+    # Refresh the Window
+    glutPostRedisplay()
+    
+def SetupRC():
+
+    glEnable(GL_DEPTH_TEST)
+    glClearColor(1.0,1.0,1.0,1.0)
+    
+    
+if __name__ == "__main__":
+    glutInit()
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
+    glutInitWindowSize(600,600)
+    glutCreateWindow("Simple OpenGL Program")
+    glutReshapeFunc(ChangeSize)
+    glutSpecialFunc(SpecialKeys)
+    glutDisplayFunc(RenderScene)
+    SetupRC()
+    glutMainLoop()

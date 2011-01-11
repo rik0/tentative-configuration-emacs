@@ -10727,7 +10727,7 @@ Includes custom, erc, font-lock, jde, semantic, speedbar, widget."
      (term-greenbg ((t (:background "green"))))
      (term-invisible ((t (nil))))
      (term-invisible-inv ((t (nil))))
-     (term-magenta ((t (:foreground "magenta"))))
+     (Term-magenta ((t (:foreground "magenta"))))
      (term-magentabg ((t (:background "magenta"))))
      (term-red ((t (:foreground "red"))))
      (term-redbg ((t (:background "red"))))
