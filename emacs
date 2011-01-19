@@ -322,10 +322,6 @@
   ;; If there is more than one, they won't work right.
  )
 
-;******************************************************
-;***             Sicstus PL stuff                   ***
-;******************************************************
-(load "/usr/local/sicstus4.1.2/lib/sicstus-4.1.2/emacs/sicstus_emacs_init")
 
 
 ;;; This was installed by package-install.el.
