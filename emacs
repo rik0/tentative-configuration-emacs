@@ -11,6 +11,10 @@
 
 (defvar macosx-p (string-match "darwin" (symbol-name system-type)))
 (defvar linux-p (string-match "gnu/linux" (symbol-name system-type)))
+(defvar win-p (string-match "windows-nt" (symbol-name system-type)))
+
+
+
 
 ;; ;;TIPS: C-h k visualizza il comando triggerato da uno shortcut o menu.
 ;; ;;MAC-OS SPECIFIC SETTINGS
@@ -324,12 +328,3 @@
 
 
 
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))

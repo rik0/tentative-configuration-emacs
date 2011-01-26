@@ -203,11 +203,11 @@
 
 
 
-;******************************************************
-;***                Eclipse stuff                   ***
-;******************************************************
-;; (autoload 'eclipse-mode "eclipse.el" "ECLIPSE editing mode" t)
-;; (setq auto-mode-alist (cons '("\\.ecl" . eclipse-mode) auto-mode-alist))
+;; ;******************************************************
+;; ;***                Eclipse stuff                   ***
+;; ;******************************************************
+;; ;; (autoload 'eclipse-mode "eclipse.el" "ECLIPSE editing mode" t)
+;; ;; (setq auto-mode-alist (cons '("\\.ecl" . eclipse-mode) auto-mode-alist))
 
 
 
@@ -221,7 +221,7 @@
 ;******************************************************
 ;***                Cmake Mode stuff                ***
 ;******************************************************
-(setq load-path (cons (expand-file-name "/dir/with/cmake-mode") load-path))
+;(setq load-path (cons (expand-file-name "/dir/with/cmake-mode") load-path))
 (require 'cmake-mode)
 (setq auto-mode-alist
       (append '(("CMakeLists\\.txt\\'" . cmake-mode)
@@ -239,19 +239,19 @@
 
 
 
-;******************************************************
-;***             Subversion stuff                   ***
-;******************************************************
-(require 'psvn)
+;; ;******************************************************
+;; ;***             Subversion stuff                   ***
+;; ;******************************************************
+;; (require 'psvn)
 
 
 
 
 
 
-;******************************************************
-;***             Prolog stuff                       ***
-;******************************************************
+;;******************************************************
+;;***             Prolog stuff                       ***
+;;******************************************************
 (setq auto-mode-alist
       (append
        '(("\\.pl" . prolog-mode))
@@ -268,8 +268,11 @@
 ;******************************************************
 ;***             Sicstus PL stuff                   ***
 ;******************************************************
-(load "/usr/local/sicstus4.1.2/lib/sicstus-4.1.2/emacs/sicstus_emacs_init")
-
+(cond
+ ((or linux-p macosx-p)
+  (load "/usr/local/sicstus4.1.2/lib/sicstus-4.1.2/emacs/sicstus_emacs_init"))
+ (win-p
+  (load "/Program Files/SICStus Prolog VC9 4.1.2/emacs/sicstus_emacs_init.el")))
 
 
 
@@ -321,15 +324,15 @@
 ;;      (list prolog-program-name (list "-q" "-t" "halt" "-s " local-file))))
 ;;  
 
-;******************************************************
-;***                  Haskell stuff                  ***
-;******************************************************
-;; Serve per intentare con tutti spazi in HASKELL
-(setq haskell-mode-hook
-    (function (lambda ()
-                (setq indent-tabs-mode nil)
-                (setq c-indent-level 4))))
-(setq haskell-font-lock-symbols 'unicode)
+;; ;******************************************************
+;; ;***                  Haskell stuff                  ***
+;; ;******************************************************
+;; ;; Serve per intentare con tutti spazi in HASKELL
+;; (setq haskell-mode-hook
+;;     (function (lambda ()
+;;                 (setq indent-tabs-mode nil)
+;;                 (setq c-indent-level 4))))
+;; (setq haskell-font-lock-symbols 'unicode)
 
 
 
@@ -346,99 +349,99 @@
 
 
 
-;; (require 'python-mode)
-;; (require 'python)
+;; ;; (require 'python-mode)
+;; ;; (require 'python)
 
-;; (autoload 'python-mode "python-mode" "Python Mode." t)
-;; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-;; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
+;; ;; (autoload 'python-mode "python-mode" "Python Mode." t)
+;; ;; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+;; ;; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
-;; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-;; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
-;; (setq interpreter-mode-alist
-;;       (cons '("python" . python-mode)
-;;       interpreter-mode-alist)
-;;       python-mode-hook
-;;       '(lambda () (progn
-;;         (set-variable 'py-indent-offset 4)
-;;         (set-variable 'py-smart-indentation nil)
-;;         (set-variable 'indent-tabs-mode nil)
-;;         ;;(highlight-beyond-fill-column)
-;;                     (define-key python-mode-map "\C-m" 'newline-and-indent)
-;;         ;(pabbrev-mode)
-;;         ;(abbrev-mode)
-;;    )))
+;; ;; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+;; ;; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
+;; ;; (setq interpreter-mode-alist
+;; ;;       (cons '("python" . python-mode)
+;; ;;       interpreter-mode-alist)
+;; ;;       python-mode-hook
+;; ;;       '(lambda () (progn
+;; ;;         (set-variable 'py-indent-offset 4)
+;; ;;         (set-variable 'py-smart-indentation nil)
+;; ;;         (set-variable 'indent-tabs-mode nil)
+;; ;;         ;;(highlight-beyond-fill-column)
+;; ;;                     (define-key python-mode-map "\C-m" 'newline-and-indent)
+;; ;;         ;(pabbrev-mode)
+;; ;;         ;(abbrev-mode)
+;; ;;    )))
 
-;; ;; Autofill inside of
-;; (defun python-auto-fill-comments-only ()
-;;   (auto-fill-mode 1)
-;;   (set (make-local-variable 'fill-nobreak-predicate)
-;;        (lambda ()
-;;          (not (python-in-string/comment)))))
-;; (add-hook 'python-mode-hook
-;;           (lambda ()
-;;             (python-auto-fill-comments-only)))
+;; ;; ;; Autofill inside of
+;; ;; (defun python-auto-fill-comments-only ()
+;; ;;   (auto-fill-mode 1)
+;; ;;   (set (make-local-variable 'fill-nobreak-predicate)
+;; ;;        (lambda ()
+;; ;;          (not (python-in-string/comment)))))
+;; ;; (add-hook 'python-mode-hook
+;; ;;           (lambda ()
+;; ;;             (python-auto-fill-comments-only)))
 
-;; ;;Autofill comments
-;; ;;TODO: make this work for docstrings too.
-;; ;;      but docstrings just use font-lock-string-face unfortunately
-;; (add-hook 'python-mode-hook
-;;           (lambda ()
-;;             (auto-fill-mode 1)
-;;             (set (make-local-variable 'fill-nobreak-predicate)
-;;                  (lambda ()
-;;                    (not (eq (get-text-property (point) 'face)
-;;                             'font-lock-comment-face))))))
+;; ;; ;;Autofill comments
+;; ;; ;;TODO: make this work for docstrings too.
+;; ;; ;;      but docstrings just use font-lock-string-face unfortunately
+;; ;; (add-hook 'python-mode-hook
+;; ;;           (lambda ()
+;; ;;             (auto-fill-mode 1)
+;; ;;             (set (make-local-variable 'fill-nobreak-predicate)
+;; ;;                  (lambda ()
+;; ;;                    (not (eq (get-text-property (point) 'face)
+;; ;;                             'font-lock-comment-face))))))
+
+
+
+;; ;; ;******************************************************
+;; ;; ;***                  Pymacs stuff                  ***
+;; ;; ;******************************************************
+;; ;; (autoload 'pymacs-apply "pymacs")
+;; ;; (autoload 'pymacs-call "pymacs")
+;; ;; (autoload 'pymacs-eval "pymacs" nil t)
+;; ;; (autoload 'pymacs-exec "pymacs" nil t)
+;; ;; (autoload 'pymacs-load "pymacs" nil t)
+;; ;; ;;(eval-after-load "pymacs"
+;; ;; ;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
+
+
 
 
 
 ;; ;******************************************************
-;; ;***                  Pymacs stuff                  ***
+;; ;***                  Rope stuff                    ***
 ;; ;******************************************************
-;; (autoload 'pymacs-apply "pymacs")
-;; (autoload 'pymacs-call "pymacs")
-;; (autoload 'pymacs-eval "pymacs" nil t)
-;; (autoload 'pymacs-exec "pymacs" nil t)
-;; (autoload 'pymacs-load "pymacs" nil t)
-;; ;;(eval-after-load "pymacs"
-;; ;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
+;; ;; (add-hook 'python-mode-hook
+;; ;;           (lambda ()
+;; ;;             (pymacs-load "ropemacs" "rope-")
+;; ;;             (setq ropemacs-enable-autoimport t)
+;; ;;             ))
 
 
 
 
+;; ;******************************************************
+;; ;***           FLY-make Python stuff                ***
+;; ;******************************************************
+;; ;; (when (load "flymake" t)
+;; ;;   (defun flymake-pyflakes-init ()
+;; ;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;; ;;                        'flymake-create-temp-with-folder-structure))
+;; ;;            (local-file (file-relative-name
+;; ;;                         temp-file
+;; ;;                         (file-name-directory buffer-file-name))))
+;; ;;       (list "pyflakes" (list local-file))))
 
-;******************************************************
-;***                  Rope stuff                    ***
-;******************************************************
-;; (add-hook 'python-mode-hook
-;;           (lambda ()
-;;             (pymacs-load "ropemacs" "rope-")
-;;             (setq ropemacs-enable-autoimport t)
-;;             ))
+;; ;;   (add-to-list 'flymake-allowed-file-name-masks
+;; ;;                '("\\.py\\'" flymake-pyflakes-init)))
 
-
-
-
-;******************************************************
-;***           FLY-make Python stuff                ***
-;******************************************************
-;; (when (load "flymake" t)
-;;   (defun flymake-pyflakes-init ()
-;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                        'flymake-create-temp-with-folder-structure))
-;;            (local-file (file-relative-name
-;;                         temp-file
-;;                         (file-name-directory buffer-file-name))))
-;;       (list "pyflakes" (list local-file))))
-
-;;   (add-to-list 'flymake-allowed-file-name-masks
-;;                '("\\.py\\'" flymake-pyflakes-init)))
-
-;******************************************************
-;***           FLY-make Global stuff                ***
-;******************************************************
-;; (load-library "flymake-cursor.el")
-;; (add-hook 'find-file-hook 'flymake-find-file-hook)
+;; ;******************************************************
+;; ;***           FLY-make Global stuff                ***
+;; ;******************************************************
+;; ;; (load-library "flymake-cursor.el")
+;; ;; (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 
 ;******************************************************
@@ -456,9 +459,13 @@
 ;******************************************************
 ;***           Slime Scheme stuff                  ***
 ;******************************************************
-;;(setq load-path 
-;;       (cons "~/.emacs.d/slime" load-path))
-(setq inferior-lisp-program "/usr/local/bin/sbcl --noinform")
+(setq load-path 
+      (cons "~/.emacs.d/slime" load-path))
+(cond
+ (macosx-p
+  (setq inferior-lisp-program "/usr/local/bin/sbcl --noinform"))
+ (win-p
+  (setq inferior-lisp-program "C:/Program Files/Steel Bank Common Lisp/1.0.37/sbcl.exe --noinform")))
 
 (slime-setup)
 (require 'slime)
@@ -466,26 +473,26 @@
 (add-hook 'slime-repl-mode-hook 'split-window-vertically)
 
 
-;;Rainbow-mode per parentesi
-(setq hl-paren-colors
-      '(;"#8f8f8f" ; this comes from Zenburn
-                   ; and I guess I'll try to make the far-outer parens look like this
-        "orange1" "yellow1" "greenyellow" "green1"
-        "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
+;; ;;Rainbow-mode per parentesi
+;; (setq hl-paren-colors
+;;       '(;"#8f8f8f" ; this comes from Zenburn
+;;                    ; and I guess I'll try to make the far-outer parens look like this
+;;         "orange1" "yellow1" "greenyellow" "green1"
+;;         "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
 
-(add-hook 'lisp-mode-hook (lambda () (highlight-parentheses-mode t) (wide-column-mode t)))
+;; (add-hook 'lisp-mode-hook (lambda () (highlight-parentheses-mode t) (wide-column-mode t)))
 
 
-;; (setq slime-lisp-implementations
-;;       `((sbcl ("/usr/local/bin/sbcl"))
-;;         (clisp ("/usr/local/bin/clisp"))))
-;; (add-hook 'lisp-mode-hook
-;;           (lambda ()
-;;             (cond ((not (featurep 'slime))
-;;                    (require 'slime)
-;;                    (normal-mode)))))
-;; (eval-after-load "slime"
-;;    '(slime-setup '(slime-fancy slime-banner)))
+;; ;; (setq slime-lisp-implementations
+;; ;;       `((sbcl ("/usr/local/bin/sbcl"))
+;; ;;         (clisp ("/usr/local/bin/clisp"))))
+;; ;; (add-hook 'lisp-mode-hook
+;; ;;           (lambda ()
+;; ;;             (cond ((not (featurep 'slime))
+;; ;;                    (require 'slime)
+;; ;;                    (normal-mode)))))
+;; ;; (eval-after-load "slime"
+;; ;;    '(slime-setup '(slime-fancy slime-banner)))
 
 
 ;******************************************************
@@ -505,8 +512,8 @@
 (autoload 'balanced-on "balanced" "Turn on balanced ``mode''" t)
 (add-hook 'scheme-mode-hook 'balanced-on)
 
-;; (custom-set-variables '(scheme-program-name "petite"))
-;; (setq scheme-program-name "petite")
+;; ;; (custom-set-variables '(scheme-program-name "petite"))
+;; ;; (setq scheme-program-name "petite")
 
 
 
@@ -522,13 +529,14 @@
 
 ;; ERLANG
 ;; FIXME this should use paths!
-(setq *base-erlang* "/usr/local/lib/erlang/")
-(setq *erlang-tools-version* "2.6.5")
-(push (concat  *base-erlang*
-               "lib/tools-" *erlang-tools-version* 
-               "/emacs/")
-      load-path)
-(setq erlang-root-dir *base-erlang*)
-(push (concat *base-erlang* "bin") 
-      exec-path)
-(require 'erlang-start)
+(when macosx-p
+  (setq *base-erlang* "/usr/local/lib/erlang/")
+  (setq *erlang-tools-version* "2.6.5")
+  (push (concat  *base-erlang*
+                 "lib/tools-" *erlang-tools-version*
+                 "/emacs/")
+        load-path)
+  (setq erlang-root-dir *base-erlang*)
+  (push (concat *base-erlang* "bin")
+        exec-path)
+  (require 'erlang-start))
