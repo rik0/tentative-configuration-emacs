@@ -456,14 +456,15 @@
 ;******************************************************
 ;***           Slime Scheme stuff                  ***
 ;******************************************************
-(setq load-path 
-       (cons "~/.emacs.d/slime" load-path))
+;;(setq load-path 
+;;       (cons "~/.emacs.d/slime" load-path))
 (setq inferior-lisp-program "/usr/local/bin/sbcl --noinform")
-(require 'slime)
-(require 'slime-autoloads)
 
 (slime-setup)
-(add-hook 'slime-repl-mode-hook 'split-window-horizontally)
+(require 'slime)
+(require 'slime-autoloads)
+(add-hook 'slime-repl-mode-hook 'split-window-vertically)
+
 
 ;;Rainbow-mode per parentesi
 (setq hl-paren-colors
@@ -517,3 +518,17 @@
 
 (add-hook 'lisp-mode-hook '(lambda ()
 			(local-set-key (kbd "RET") 'newline-and-indent)))
+
+
+;; ERLANG
+;; FIXME this should use paths!
+(setq *base-erlang* "/usr/local/lib/erlang/")
+(setq *erlang-tools-version* "2.6.5")
+(push (concat  *base-erlang*
+               "lib/tools-" *erlang-tools-version* 
+               "/emacs/")
+      load-path)
+(setq erlang-root-dir *base-erlang*)
+(push (concat *base-erlang* "bin") 
+      exec-path)
+(require 'erlang-start)
