@@ -9,7 +9,7 @@ def is_windows():
     return os.name == 'nt'
 
 def windows_home():
-    return '%(HOMEDRIVE)s%(HOMEPATH)' % os.environ
+    return '%(HOMEDRIVE)s%(HOMEPATH)s' % os.environ
 
 def home_path():
     return windows_home() if is_windows() else os.environ['HOME']
@@ -21,7 +21,6 @@ def find_base():
         # here add better diagnostic
         raise RuntimeError("Can't find configuration files.")
 
-        
 # everybody nows that explicit logging this way sucks
 def overwrite_if_more_recent(command, src, dest, *args, **kw):
     try:
@@ -31,7 +30,7 @@ def overwrite_if_more_recent(command, src, dest, *args, **kw):
         if e.errno == errno.EEXIST:
             try:
                 shutil.rmtree(dest)
-                print '[DEL] %s' % dest 
+                print '[DEL] %s' % dest
             except OSError:
                 if path.islink(dest):
                     # bloody symlinks
