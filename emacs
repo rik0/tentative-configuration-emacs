@@ -9,9 +9,12 @@
      (expand-file-name "~/.emacs.d/elpa/package.el"))
   (package-initialize))
 
-(defvar macosx-p (string-match "darwin" (symbol-name system-type)))
-(defvar linux-p (string-match "gnu/linux" (symbol-name system-type)))
-(defvar win-p (string-match "windows-nt" (symbol-name system-type)))
+(defun macosx-p ()
+  (string-match "darwin" (symbol-name system-type)))
+(defun linux-p ()
+  (string-match "gnu/linux" (symbol-name system-type)))
+(defun win-p ()
+  (string-match "windows-nt" (symbol-name system-type)))
 
 
 

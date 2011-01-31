@@ -269,9 +269,9 @@
 ;***             Sicstus PL stuff                   ***
 ;******************************************************
 (cond
- ((or linux-p macosx-p)
+ ((or (linux-p) (macosx-p))
   (load "/usr/local/sicstus4.1.2/lib/sicstus-4.1.2/emacs/sicstus_emacs_init"))
- (win-p
+ ((win-p)
   (load "/Program Files/SICStus Prolog VC9 4.1.2/emacs/sicstus_emacs_init.el")))
 
 
@@ -462,9 +462,9 @@
 (setq load-path 
       (cons "~/.emacs.d/slime" load-path))
 (cond
- (macosx-p
+ ((macosx-p)
   (setq inferior-lisp-program "/usr/local/bin/sbcl --noinform"))
- (win-p
+ ((win-p)
   (setq inferior-lisp-program "C:/Program Files/Steel Bank Common Lisp/1.0.37/sbcl.exe --noinform")))
 
 (slime-setup)
