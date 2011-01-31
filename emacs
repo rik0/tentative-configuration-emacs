@@ -38,9 +38,9 @@
 ;;     (global-set-key (kbd "M-z") 'undo) ;UNDO
 ;;     (global-set-key (kbd "M-y") 'repeat) ;REPEAT
 ;;     (global-set-key (kbd "M-o") 'find-file) ;OPEN
-;;     (global-set-key (kbd "M-s") 'save-buffer) ;SAVE                                      
+;;     (global-set-key (kbd "M-s") 'save-buffer) ;SAVE
 ;;     (global-set-key (kbd "<f1>") 'execute-extended-command) ;;M-x
-;;     (global-set-key (kbd "M-a") 'mark-whole-buffer)                                                             
+;;     (global-set-key (kbd "M-a") 'mark-whole-buffer)
 ;;     (global-set-key (kbd "<f2>") 'ns-toggle-fullscreen)))
 
 ;; ;LINUX SPECIFIC SETTINGS
@@ -57,10 +57,10 @@
 ;;     (global-set-key (kbd "C-z") 'undo) ;UNDO
 ;;     (global-set-key (kbd "C-y") 'repeat) ;REPEAT
 ;;     (global-set-key (kbd "C-o") 'find-file) ;OPEN
-;;     (global-set-key (kbd "C-s") 'save-buffer) ;SAVE                                      
+;;     (global-set-key (kbd "C-s") 'save-buffer) ;SAVE
 ;;     (global-set-key (kbd "<f1>") 'execute-extended-command) ;;M-x
-;;     (global-set-key (kbd "C-a") 'mark-whole-buffer) ;SELECT ALL                                                          
-;;     (global-set-key (kbd "<f2>") 'my-toggle-fullscreen))) ;FULLSCREEN                                                           
+;;     (global-set-key (kbd "C-a") 'mark-whole-buffer) ;SELECT ALL
+;;     (global-set-key (kbd "<f2>") 'my-toggle-fullscreen))) ;FULLSCREEN
 
 
 ; ** ERGO EMACS
@@ -256,7 +256,7 @@
 (setq load-path (cons  "~/.emacs.d/" load-path))
 
 (when (macosx-p)
-    (load-library "apple-cus"))
+  (load-library "apple-cus"))
 (load-library "more-libraries")
 
 
@@ -274,8 +274,8 @@
   (my-color)
   (hl-line-mode)
   (if (boundp 'riko-preferred-font)
-      (set-face-font        
-       'default 
+      (set-face-font
+       'default
        riko-preferred-font)))
 
 (if window-system

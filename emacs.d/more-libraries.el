@@ -526,14 +526,13 @@
 
 ;; ERLANG
 ;; FIXME this should use paths!
-(when macosx-p
-  (setq *base-erlang* "/usr/local/lib/erlang/")
-  (setq *erlang-tools-version* "2.6.5")
-  (push (concat  *base-erlang*
-                 "lib/tools-" *erlang-tools-version*
-                 "/emacs/")
-        load-path)
-  (setq erlang-root-dir *base-erlang*)
-  (push (concat *base-erlang* "bin")
-        exec-path)
-  (require 'erlang-start))
+(setq *base-erlang* "/usr/local/lib/erlang/")
+(setq *erlang-tools-version* "2.6.5")
+(push (concat  *base-erlang*
+               "lib/tools-" *erlang-tools-version*
+               "/emacs/")
+      load-path)
+(setq erlang-root-dir *base-erlang*)
+(push (concat *base-erlang* "bin")
+      exec-path)
+(ignore-errors (require 'erlang-start))
