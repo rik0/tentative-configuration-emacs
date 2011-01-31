@@ -259,20 +259,17 @@
 (setq prolog-indent-width 4)
 
 
-
-
-
-
-
-
 ;******************************************************
 ;***             Sicstus PL stuff                   ***
 ;******************************************************
-(cond
- ((or (linux-p) (macosx-p))
-  (load "/usr/local/sicstus4.1.2/lib/sicstus-4.1.2/emacs/sicstus_emacs_init"))
- ((win-p)
-  (load "/Program Files/SICStus Prolog VC9 4.1.2/emacs/sicstus_emacs_init.el")))
+(setq sicstus-path 
+      (cond
+       ((or (linux-p) (macosx-p))
+        "/usr/local/sicstus4.1.2/lib/sicstus-4.1.2/emacs/sicstus_emacs_init")
+       ((win-p)
+        "/Program Files/SICStus Prolog VC9 4.1.2/emacs/sicstus_emacs_init.el")))
+(load sicstus-path t)
+
 
 
 
