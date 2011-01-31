@@ -255,7 +255,7 @@
 
 (setq load-path (cons  "~/.emacs.d/" load-path))
 
-(when macosx-p
+(when (macosx-p)
     (load-library "apple-cus"))
 (load-library "more-libraries")
 
