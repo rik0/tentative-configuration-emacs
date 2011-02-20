@@ -454,8 +454,28 @@
 
 
 ;******************************************************
-;***           Slime Scheme stuff                  ***
+;***                   Clojure                      ***
 ;******************************************************
+
+(require 'clojure-mode)
+(add-to-list 'load-path
+             "~/.emacs.d/swank-clojure/src/emacs")
+
+(setq swank-clojure-jar-path "/usr/local/Cellar/clojure/1.2.0/clojure.jar"
+      swank-clojure-extra-classpaths (list
+                                      "~/.emacs.d/swank-clojure/src/main/clojure"
+                                      "/usr/local/Cellar/clojure-contrib/1.2.0/clojure-contrib.jar"))
+
+
+
+;******************************************************
+;***              Slime stuff                       ***
+;******************************************************
+
+(eval-after-load "slime" 
+  '(progn (slime-setup '(slime-repl))))
+
+
 (setq load-path 
       (cons "~/.emacs.d/slime" load-path))
 (cond
@@ -464,7 +484,7 @@
  ((win-p)
   (setq inferior-lisp-program "C:/Program Files/Steel Bank Common Lisp/1.0.37/sbcl.exe --noinform")))
 
-(slime-setup)
+; (slime-setup)
 (require 'slime)
 (require 'slime-autoloads)
 (add-hook 'slime-repl-mode-hook 'split-window-vertically)
@@ -490,6 +510,7 @@
 ;; ;;                    (normal-mode)))))
 ;; ;; (eval-after-load "slime"
 ;; ;;    '(slime-setup '(slime-fancy slime-banner)))
+
 
 
 ;******************************************************
