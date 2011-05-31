@@ -306,14 +306,16 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(LaTeX-command "latex --synctex=1")
+ '(TeX-shell "/bin/zsh")
  '(column-number-mode t)
  '(display-time-mode t)
  '(global-hl-line-mode t)
  '(indent-tabs-mode nil)
  '(mac-pass-command-to-system nil)
  '(mouse-wheel-progressive-speed nil)
- '(ns-alternate-modifier (quote alt) t)
- '(ns-command-modifier (quote meta) t)
+ '(ns-alternate-modifier (quote alt))
+ '(ns-command-modifier (quote meta))
  '(pc-selection-mode nil nil (pc-select))
  '(save-place nil nil (saveplace))
  '(show-paren-mode t)
